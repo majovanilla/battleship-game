@@ -1,24 +1,23 @@
-const ship = (length, x, y, direction) => {
-  const hitArr = [];
-  const sinkStatus = false;
+const ship = (length, pos) => {
+  const position = pos;
 
-  function position() {
-    const arr = [];
-    let cell = `${x}${y}`;
-    for (let i = 1; i = length; i += 1) {
-      if (direction = 'right') {
-        arr.push(cell);
-        cell = `${x + i}${y}`;
-      }
-    }
-  }
 
   function hit(cell) {
-    console.log('this');
+    if (position.includes(cell)) {
+      const index = position.indexOf(cell);
+      position.splice(index, 1);
+      return true;
+    }
+    return false;
+  }
+
+  function isSunk() {
+    if (position.length === 0) return true;
+    return false;
   }
 
   return {
-    length, x, y, sinkStatus,
+    length, isSunk, hit,
   };
 };
 
