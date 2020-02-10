@@ -14,6 +14,9 @@ function isTurn(p1, p2) {
   p2.turn = p2.turn === 0 ? 1 : 0;
 }
 
-
-
-export { player, randomTurn, isTurn };
+function computerSelection(arr) {
+  const { length } = arr;
+  const index = Math.floor(Math.random() * Math.floor(length));
+  return (arr[index]);
+}
+export { player, randomTurn, isTurn, computerSelection };

@@ -1,4 +1,5 @@
 import * as playerFunc from '../js/player';
+import board from '../js/board';
 
 describe('Player functionality', () => {
   const player1 = playerFunc.player('Suman');
@@ -23,5 +24,11 @@ describe('Player functionality', () => {
     playerFunc.isTurn(player2, player1);
     expect(player1.turn).not.toEqual(val1);
     expect(player2.turn).not.toEqual(val2);
+  });
+
+  test('should return random element from an available cells', () => {
+    const arr = [2, 5, 7, 8, 6];
+    const result = playerFunc.computerSelection(arr);
+    expect(arr.includes(result)).toBeTruthy();
   });
 });
