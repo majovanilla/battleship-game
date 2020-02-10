@@ -36,4 +36,3 @@ describe('hit function', () => {
     expect(ship2.isSunk()).toBe(true);
   });
 });
-

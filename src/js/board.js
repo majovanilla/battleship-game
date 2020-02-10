@@ -1,15 +1,9 @@
 import ship from './ship';
-// create board factory
-// placeShips
-// receiveAttack
 
-// properties
-//array of ships
-// selected array
-//
 const board = () => {
-  let shipsArr = [];
-  let selectedArr = [10];
+  const shipsArr = [];
+  const missedArr = [];
+  const hitsArr = [];
 
   function placeShips() {
     const array = [[1, [55]], [1, [80]], [1, [10]], [1, [37]], [2, [3, 4]], [2, [76, 77]], [3, [9, 19, 29]], [3, [32, 33, 34]], [4, [53, 63, 73, 83]]];
@@ -19,18 +13,20 @@ const board = () => {
   }
 
   function isValid(cell) {
-    if (selectedArr.includes(cell)) return false;
+    if (missedArr.includes(cell) || (hitsArr.includes(cell))) return false;
     return true;
   }
 
   const receiveAttack = (cell) => {
     if (isValid(cell)) {
-      selectedArr.push(cell);
       for (let i = 0; i < shipsArr.length; i += 1) {
         if (shipsArr[i].hit(cell)) {
+          hitsArr.push(cell);
           return true;
         }
       }
+      missedArr.push(cell);
+      return true;
     }
     return false;
   };
@@ -46,7 +42,7 @@ const board = () => {
 
   placeShips();
   return {
-    shipsArr, winner, selectedArr, receiveAttack
+    shipsArr, winner, hitsArr, missedArr, receiveAttack,
   };
 };
 
