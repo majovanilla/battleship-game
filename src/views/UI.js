@@ -1,5 +1,6 @@
-import board from '../js/board';
-import { changeTurn } from '../js/player';
+//import board from '../js/board';
+//import { changeTurn } from '../js/player';
+import * as Player from '../js/player';
 
 const UI = (() => {
   const mainElement = document.querySelector('.main-section');
@@ -39,9 +40,9 @@ const UI = (() => {
 })();
 
 
-function markCell(cell, gameBoard) {
+function markCell(cell, gameBoard, selectedCell) {
   const attack = gameBoard.receiveAttack(cell);
-  const selectedCell = document.getElementById(`${cell}`);
+
   if (attack === false) {
     alert('Select an empty cell');
   } else if (attack === 'hit') {
@@ -51,12 +52,25 @@ function markCell(cell, gameBoard) {
     selectedCell.classList.add('missed-cell');
   }
 }
-const runGame = (player1, player2, gameBoard) => {
+const runGame = (player1, player2, gameBoard1, gameBoard2) => {
 
   function cellClick(e) {
     const cell = parseInt(e.target.dataset.value, 10);
-    markCell(cell, gameBoard);
-    changeTurn(player1, player2);
+    markCell(cell, gameBoard2, e.target);
+    if (gameBoard2.winner()) {
+      alert(`${player1.username} is winner`);
+    } else {
+      const computerCell = Player.computerSelection(gameBoard1.emptyCells);
+      console.log(document.getElementById(`${gameBoard1.player.username}-board`).querySelector('id=' + computerCell));
+
+      const selectedCell = document.getElementById(`${gameBoard1.player.username}-board`).getElementById(`${computerCell}`);
+      markCell(computerCell, gameBoard1, selectedCell);
+      if (gameBoard1.winner()) {
+        alert(`${player2.username} is winner`);
+      }
+    }
+
+    //changeTurn(player1, player2);
   }
 
   const eventHandler = () => {

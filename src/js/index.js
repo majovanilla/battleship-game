@@ -13,7 +13,7 @@ function gameLoop() {
   const playerArray = [player1, player2];
   Player.randomTurn(playerArray);
   runGame(player1, player2, board1, board2);
-  let gameOver = false;
+  /* let gameOver = false;
   while (gameOver === false) {
     if (checkTurn(player1)) {
       runGame(player1, player2, board2);
@@ -21,17 +21,16 @@ function gameLoop() {
         gameOver = true;
         alert(`${player1.username} is winner`);
       }
-    }/*  else if (checkTurn(player2)) {
-      const selectedCell = Player.computerSelection(board1.emptyCells);
-      markCell(selectedCell, board1);
-      if (board1.winner()) {
-        gameOver = true;
-        alert(`${player2.username} is winner`);
-      }
-      Player.changeTurn(player1, player2);
-    } */
-
-  }
+    } *//*  else if (checkTurn(player2)) {
+const selectedCell = Player.computerSelection(board1.emptyCells);
+markCell(selectedCell, board1);
+if (board1.winner()) {
+  gameOver = true;
+  alert(`${player2.username} is winner`);
 }
+Player.changeTurn(player1, player2);
+} */
+}
+
 
 gameLoop();
