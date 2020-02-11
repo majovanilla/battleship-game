@@ -1,11 +1,11 @@
-//import board from '../js/board';
-//import { changeTurn } from '../js/player';
 import * as Player from '../js/player';
+import board from '../js/board';
+import shipsArr from '../js/board';
 
 const UI = (() => {
   const mainElement = document.querySelector('.main-section');
 
-  const renderBoard = (board) => {
+  const renderBoard = (board, render = false) => {
     const table = document.createElement('table');
     const boardSize = 10;
     const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -31,12 +31,7 @@ const UI = (() => {
     mainElement.append(table);
   };
 
-  /* const markHit = (value, type) => {
-   const selectedCell = document.getAttribute()
-   }; */
-
-
-  return { renderBoard };
+  return { mainElement, renderBoard };
 })();
 
 
@@ -45,14 +40,28 @@ function markCell(cell, gameBoard, selectedCell) {
 
   if (attack === false) {
     alert('Select an empty cell');
-  } else if (attack === 'hit') {
+    return false;
+  }
+  if (attack === 'hit') {
     selectedCell.classList.add('hit-cell');
-  } else if (attack === 'miss') {
+    return true;
+  }
+  if (attack === 'miss') {
     selectedCell.textContent = 'X';
     selectedCell.classList.add('missed-cell');
+    return true;
   }
 }
+
+// function renderShips(board) {
+//   const arr = board.shipsArr;
+//   arr.forEach(element => {
+
+//   });
+// }
+
 const runGame = (player1, player2, gameBoard1, gameBoard2) => {
+  let gameOver = false;
 
   function findCell(computerCell) {
     const allCells = document.getElementById(`${gameBoard1.player.username}-board`).querySelectorAll('.cell');
@@ -61,23 +70,34 @@ const runGame = (player1, player2, gameBoard1, gameBoard2) => {
         return allCells[i];
       }
     }
-  };
+  }
+
+  function resetGame() {
+    gameBoard1.reset();
+    gameBoard2.reset();
+    UI.mainElement.innerHTML = '';
+    UI.renderBoard(gameBoard1);
+    UI.renderBoard(gameBoard2);
+  }
 
   function cellClick(e) {
     const cell = parseInt(e.target.dataset.value, 10);
-    markCell(cell, gameBoard2, e.target);
-    if (gameBoard2.winner()) {
-      alert(`${player1.username} is winner`);
-    } else {
+    if (markCell(cell, gameBoard2, e.target)) {
+      if (gameBoard2.winner()) {
+        alert(`${player1.username} is winner`);
+        gameOver = true;
+      }
       setTimeout(() => {
         const computerCell = Player.computerSelection(gameBoard1.emptyCells);
         const selectedCell = findCell(computerCell);
         markCell(computerCell, gameBoard1, selectedCell);
         if (gameBoard1.winner()) {
           alert(`${player2.username} is winner`);
+          gameOver = true;
         }
       }, 500);
     }
+    return gameOver;
   }
 
   const eventHandler = () => {
@@ -87,6 +107,7 @@ const runGame = (player1, player2, gameBoard1, gameBoard2) => {
 
   eventHandler();
 
+  return { resetGame };
 };
 
 export { UI, runGame, markCell };

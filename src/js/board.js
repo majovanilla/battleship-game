@@ -48,11 +48,17 @@ const board = (player) => {
     return true;
   };
 
+  const reset = () => {
+    const shipsArr = [];
+    const missedArr = [];
+    const hitsArr = [];
+    const emptyCells = [...Array(100).keys()];
+  };
+
   placeShips();
   return {
-    player, shipsArr, winner, hitsArr, missedArr, receiveAttack, emptyCells,
+    player, shipsArr, winner, hitsArr, missedArr, receiveAttack, emptyCells, reset,
   };
 };
 
 export { board as default };
-

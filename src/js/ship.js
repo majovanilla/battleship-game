@@ -1,7 +1,6 @@
 const ship = (length, pos) => {
   const position = pos;
 
-
   function hit(cell) {
     if (position.includes(cell)) {
       const index = position.indexOf(cell);

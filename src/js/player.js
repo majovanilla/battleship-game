@@ -1,12 +1,11 @@
 const player = (username) => {
-  let turn = 0;
+  const turn = 0;
 
   return { username, turn };
 };
 
-function randomTurn(playerArr) {
-  const playerNum = Math.floor(Math.random() * Math.floor(2));
-  playerArr[playerNum].turn = 1;
+function setTurn(player) {
+  player.turn = 1;
 }
 
 function changeTurn(p1, p2) {
@@ -19,4 +18,4 @@ function computerSelection(arr) {
   const index = Math.floor(Math.random() * Math.floor(length));
   return (arr[index]);
 }
-export { player, randomTurn, changeTurn, computerSelection };
+export { player, setTurn, changeTurn, computerSelection };
