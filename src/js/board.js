@@ -22,18 +22,19 @@ const board = (player) => {
     const index = emptyCells.indexOf(cell);
     emptyCells.splice(index, 1);
   }
+
   const receiveAttack = (cell) => {
     if (isValid(cell)) {
       for (let i = 0; i < shipsArr.length; i += 1) {
         if (shipsArr[i].hit(cell)) {
           hitsArr.push(cell);
           popCell(cell);
-          return true;
+          return 'hit';
         }
       }
       missedArr.push(cell);
       popCell(cell);
-      return true;
+      return 'miss';
     }
     return false;
   };
@@ -49,7 +50,7 @@ const board = (player) => {
 
   placeShips();
   return {
-    player, shipsArr, winner, hitsArr, missedArr, receiveAttack, emptyCells
+    player, shipsArr, winner, hitsArr, missedArr, receiveAttack, emptyCells,
   };
 };
 

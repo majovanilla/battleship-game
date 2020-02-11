@@ -1,8 +1,0 @@
-table {
-  height: 400px;
-  width: 40%;
-}
-
-table, th, td {
-  border: 1px solid black;
-}

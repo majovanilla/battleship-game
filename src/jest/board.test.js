@@ -22,11 +22,12 @@ describe('board function', () => {
   });
 
   test('should check for hit', () => {
-    expect(board1.hitsArr.length).toBe(1);
+    expect(board1.receiveAttack(9)).toBe('hit');
+    expect(board1.hitsArr.length).toBe(2);
   });
 
   test('should check for miss', () => {
-    board1.receiveAttack(0);
+    expect(board1.receiveAttack(0)).toBe('miss');
     expect(board1.missedArr.length).toBe(1);
   });
 
