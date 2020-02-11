@@ -54,29 +54,35 @@ function markCell(cell, gameBoard, selectedCell) {
 }
 const runGame = (player1, player2, gameBoard1, gameBoard2) => {
 
+  function findCell(computerCell) {
+    const allCells = document.getElementById(`${gameBoard1.player.username}-board`).querySelectorAll('.cell');
+    for (let i = 0; i < allCells.length; i += 1) {
+      if (allCells[i].dataset.value === computerCell.toString()) {
+        return allCells[i];
+      }
+    }
+  };
+
   function cellClick(e) {
     const cell = parseInt(e.target.dataset.value, 10);
     markCell(cell, gameBoard2, e.target);
     if (gameBoard2.winner()) {
       alert(`${player1.username} is winner`);
     } else {
-      const computerCell = Player.computerSelection(gameBoard1.emptyCells);
-      console.log(document.getElementById(`${gameBoard1.player.username}-board`).querySelector('id=' + computerCell));
-
-      const selectedCell = document.getElementById(`${gameBoard1.player.username}-board`).getElementById(`${computerCell}`);
-      markCell(computerCell, gameBoard1, selectedCell);
-      if (gameBoard1.winner()) {
-        alert(`${player2.username} is winner`);
-      }
+      setTimeout(() => {
+        const computerCell = Player.computerSelection(gameBoard1.emptyCells);
+        const selectedCell = findCell(computerCell);
+        markCell(computerCell, gameBoard1, selectedCell);
+        if (gameBoard1.winner()) {
+          alert(`${player2.username} is winner`);
+        }
+      }, 500);
     }
-
-    //changeTurn(player1, player2);
   }
 
   const eventHandler = () => {
     const domBoard = document.getElementById('computer-board');
     domBoard.addEventListener('click', cellClick);
-
   };
 
   eventHandler();
