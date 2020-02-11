@@ -1,4 +1,5 @@
-import * as board from '../js/board';
+import board from '../js/board';
+import { changeTurn } from '../js/player';
 
 const UI = (() => {
   const mainElement = document.querySelector('.main-section');
@@ -15,6 +16,7 @@ const UI = (() => {
         if (i !== 0 && j !== 0) {
           cell.setAttribute('data-value', ((i - 1) * 10 + (j - 1)));
           cell.classList.add('cell');
+          cell.setAttribute('id', ((i - 1) * 10 + (j - 1)));
         } else if (i === 0 && j > 0) {
           cell.textContent = j;
         } else if (i > 0 && j === 0) {
@@ -32,30 +34,39 @@ const UI = (() => {
    const selectedCell = document.getAttribute()
    }; */
 
+
+  return { renderBoard };
+})();
+
+
+function markCell(cell, gameBoard) {
+  const attack = gameBoard.receiveAttack(cell);
+  const selectedCell = document.getElementById(`${cell}`);
+  if (attack === false) {
+    alert('Select an empty cell');
+  } else if (attack === 'hit') {
+    selectedCell.classList.add('hit-cell');
+  } else if (attack === 'miss') {
+    selectedCell.textContent = 'X';
+    selectedCell.classList.add('missed-cell');
+  }
+}
+const runGame = (player1, player2, gameBoard) => {
+
   function cellClick(e) {
-    const cell = e.target.dataset.value;
-    console.log(cell);
-    const attack = board.receiveAttack(cell);
-    console.log(attack);
-    if (attack === false) {
-      alert('Select an empty cell');
-    } else if (attack === 'hit') {
-      console.log(e.target);
-      e.targe.classList.add('hit-cell');
-    } else if (attack === 'miss') {
-      console.log(e.target);
-      e.target.textContent = 'X';
-      e.target.classList.add('missed-cell');
-    }
+    const cell = parseInt(e.target.dataset.value, 10);
+    markCell(cell, gameBoard);
+    changeTurn(player1, player2);
   }
 
   const eventHandler = () => {
     const domBoard = document.getElementById('computer-board');
     domBoard.addEventListener('click', cellClick);
+
   };
 
-  return { renderBoard, eventHandler };
-})();
+  eventHandler();
 
+};
 
-export default UI;
+export { UI, runGame, markCell };

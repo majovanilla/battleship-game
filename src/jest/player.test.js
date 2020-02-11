@@ -21,7 +21,7 @@ describe('Player functionality', () => {
   test('should switch turns', () => {
     const val1 = player1.turn;
     const val2 = player2.turn;
-    playerFunc.isTurn(player2, player1);
+    playerFunc.changeTurn(player2, player1);
     expect(player1.turn).not.toEqual(val1);
     expect(player2.turn).not.toEqual(val2);
   });
