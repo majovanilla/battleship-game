@@ -30,6 +30,17 @@ table, th, td {
   border: 1px solid black;
 }
 
+.message-board {
+  width: 30%;
+  height: 75px;
+  margin: 30px auto;
+  padding: 5px;
+  border: 1px black solid;
+  text-align: center;
+  font-size: 2rem;
+  color: red;
+}
+
 .hit-cell {
   background: red;
 }

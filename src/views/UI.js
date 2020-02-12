@@ -52,8 +52,9 @@ const UI = (() => {
 
 function markCell(cell, gameBoard, selectedCell) {
   const attack = gameBoard.receiveAttack(cell);
+  const messageBoard = document.querySelector('.message-board');
   if (attack === false) {
-    alert('Select an empty cell');
+    messageBoard.innerHTML = '<p class=\'message-text\'> Select an empty cell </p>';
   }
   if (attack === 'hit') {
     selectedCell.classList.add('hit-cell');
@@ -94,24 +95,26 @@ const gameLogic = () => {
 
   function cellClick(e) {
     const cell = parseInt(e.target.dataset.value, 10);
+    const messageBoard = document.querySelector('.message-board');
+    messageBoard.innerHTML = '';
     if (markCell(cell, board2, e.target)) {
       if (board2.winner()) {
-        alert(`${board1.player.username} is winner`);
+        messageBoard.innerHTML = `<p class='message-text'> Congratulations ${board1.player.username}! You win!</p>`;
         setTimeout(() => {
           /* eslint no-restricted-globals: ["error", "event"] */
           location.reload();
-        }, 500);
+        }, 2000);
       }
       setTimeout(() => {
         const computerCell = Player.computerSelection(board1.emptyCells);
         const selectedCell = findCell(computerCell);
         markCell(computerCell, board1, selectedCell);
         if (board1.winner()) {
-          alert(`${board2.player.username} is winner`);
+          messageBoard.innerHTML = `<p class='message-text'> Congratulations ${board2.player.username}! You win! </p>`;
           setTimeout(() => {
             /* eslint no-restricted-globals: ["error", "event"] */
             location.reload();
-          }, 500);
+          }, 2000);
         }
       }, 500);
     }
