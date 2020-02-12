@@ -1,11 +1,29 @@
+.game-title {
+  font-size: 3rem;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.board-div {
+  width: 40%;
+  text-align: center;
+}
+
 .main-section {
   display: flex;
   justify-content: space-between;
+  padding: 0 50px;
 }
 
 table {
   height: 400px;
-  width: 40%;
+  width: 100%;
+}
+
+.player-name {
+  font-size: 2rem;
+  text-transform: capitalize;
 }
 
 table, th, td {

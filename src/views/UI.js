@@ -25,8 +25,15 @@ const UI = (() => {
       }
       table.appendChild(row);
     }
+    const playerName = document.createElement('h3');
+    playerName.textContent = `${board.player.username}`;
+    playerName.classList.add('player-name');
     table.classList.add('board');
-    mainElement.append(table);
+    const boardDiv = document.createElement('div');
+    boardDiv.classList.add('board-div');
+    boardDiv.append(table);
+    mainElement.append(boardDiv);
+    boardDiv.append(playerName);
   };
 
   function renderShips(board) {
