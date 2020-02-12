@@ -19,3 +19,7 @@ table, th, td {
 .missed-cell {
   background: yellow;
 }
+
+.ships {
+  border: solid 5px blue;
+}

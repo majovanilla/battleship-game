@@ -16,7 +16,7 @@ const ship = (length, pos) => {
   }
 
   return {
-    length, isSunk, hit,
+    length, isSunk, hit, position,
   };
 };
 

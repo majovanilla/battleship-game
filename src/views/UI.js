@@ -1,11 +1,10 @@
 import * as Player from '../js/player';
 import board from '../js/board';
-import shipsArr from '../js/board';
 
+const mainElement = document.querySelector('.main-section');
 const UI = (() => {
-  const mainElement = document.querySelector('.main-section');
 
-  const renderBoard = (board, render = false) => {
+  const renderBoard = (board) => {
     const table = document.createElement('table');
     const boardSize = 10;
     const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -31,13 +30,22 @@ const UI = (() => {
     mainElement.append(table);
   };
 
-  return { mainElement, renderBoard };
+  function renderShips(board) {
+    const arr = board.shipsArr;
+    arr.forEach(ship => {
+      ship.position.forEach(cell => {
+        const shipCell = document.getElementById(`${board.player.username}-board`).querySelector(`td[data-value="${cell}"]`);
+        shipCell.classList.add('ships');
+      });
+    });
+  };
+
+  return { mainElement, renderBoard, renderShips, };
 })();
 
 
 function markCell(cell, gameBoard, selectedCell) {
   const attack = gameBoard.receiveAttack(cell);
-
   if (attack === false) {
     alert('Select an empty cell');
     return false;
@@ -47,24 +55,29 @@ function markCell(cell, gameBoard, selectedCell) {
     return true;
   }
   if (attack === 'miss') {
-    selectedCell.textContent = 'X';
     selectedCell.classList.add('missed-cell');
     return true;
   }
 }
 
-// function renderShips(board) {
-//   const arr = board.shipsArr;
-//   arr.forEach(element => {
 
-//   });
-// }
+const gameLogic = () => {
+  let board1;
+  let board2;
 
-const runGame = (player1, player2, gameBoard1, gameBoard2) => {
-  let gameOver = false;
+  const init = () => {
+    const player1 = Player.player('player');
+    const player2 = Player.player('computer');
+    board1 = board(player1);
+    board2 = board(player2);
+    UI.renderBoard(board1);
+    UI.renderShips(board1);
+    UI.renderBoard(board2);
+    Player.setTurn(player1);
+  };
 
   function findCell(computerCell) {
-    const allCells = document.getElementById(`${gameBoard1.player.username}-board`).querySelectorAll('.cell');
+    const allCells = document.getElementById(`${board1.player.username}-board`).querySelectorAll('.cell');
     for (let i = 0; i < allCells.length; i += 1) {
       if (allCells[i].dataset.value === computerCell.toString()) {
         return allCells[i];
@@ -72,42 +85,38 @@ const runGame = (player1, player2, gameBoard1, gameBoard2) => {
     }
   }
 
-  function resetGame() {
-    gameBoard1.reset();
-    gameBoard2.reset();
-    UI.mainElement.innerHTML = '';
-    UI.renderBoard(gameBoard1);
-    UI.renderBoard(gameBoard2);
-  }
-
   function cellClick(e) {
     const cell = parseInt(e.target.dataset.value, 10);
-    if (markCell(cell, gameBoard2, e.target)) {
-      if (gameBoard2.winner()) {
-        alert(`${player1.username} is winner`);
-        gameOver = true;
+    if (markCell(cell, board2, e.target)) {
+      if (board2.winner()) {
+        alert(`${board1.player.username} is winner`);
+        setTimeout(() => {
+          /* eslint no-restricted-globals: ["error", "event"] */
+          location.reload();
+        }, 500);
       }
       setTimeout(() => {
-        const computerCell = Player.computerSelection(gameBoard1.emptyCells);
+        const computerCell = Player.computerSelection(board1.emptyCells);
         const selectedCell = findCell(computerCell);
-        markCell(computerCell, gameBoard1, selectedCell);
-        if (gameBoard1.winner()) {
-          alert(`${player2.username} is winner`);
-          gameOver = true;
+        markCell(computerCell, board1, selectedCell);
+        if (board1.winner()) {
+          alert(`${board2.player.username} is winner`);
+          setTimeout(() => {
+            /* eslint no-restricted-globals: ["error", "event"] */
+            location.reload();
+          }, 500);
         }
       }, 500);
     }
-    return gameOver;
   }
 
   const eventHandler = () => {
     const domBoard = document.getElementById('computer-board');
     domBoard.addEventListener('click', cellClick);
   };
-
+  init();
   eventHandler();
-
-  return { resetGame };
 };
 
-export { UI, runGame, markCell };
+
+export default gameLogic;
