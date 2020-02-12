@@ -1,5 +1,4 @@
 import * as playerFunc from '../js/player';
-import board from '../js/board';
 
 describe('Player functionality', () => {
   const player1 = playerFunc.player('Suman');

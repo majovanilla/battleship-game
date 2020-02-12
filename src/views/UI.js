@@ -3,7 +3,6 @@ import board from '../js/board';
 
 const mainElement = document.querySelector('.main-section');
 const UI = (() => {
-
   const renderBoard = (board) => {
     const table = document.createElement('table');
     const boardSize = 10;
@@ -38,9 +37,9 @@ const UI = (() => {
         shipCell.classList.add('ships');
       });
     });
-  };
+  }
 
-  return { mainElement, renderBoard, renderShips, };
+  return { mainElement, renderBoard, renderShips };
 })();
 
 
@@ -48,7 +47,6 @@ function markCell(cell, gameBoard, selectedCell) {
   const attack = gameBoard.receiveAttack(cell);
   if (attack === false) {
     alert('Select an empty cell');
-    return false;
   }
   if (attack === 'hit') {
     selectedCell.classList.add('hit-cell');
@@ -58,6 +56,7 @@ function markCell(cell, gameBoard, selectedCell) {
     selectedCell.classList.add('missed-cell');
     return true;
   }
+  return false;
 }
 
 
@@ -83,6 +82,7 @@ const gameLogic = () => {
         return allCells[i];
       }
     }
+    return true;
   }
 
   function cellClick(e) {

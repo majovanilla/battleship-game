@@ -18,4 +18,6 @@ function computerSelection(arr) {
   const index = Math.floor(Math.random() * Math.floor(length));
   return (arr[index]);
 }
-export { player, setTurn, changeTurn, computerSelection };
+export {
+  player, setTurn, changeTurn, computerSelection,
+};

@@ -7,7 +7,8 @@ const board = (player) => {
   const emptyCells = [...Array(100).keys()];
 
   function placeShips() {
-    const array = [[1, [55]], [1, [80]], [1, [10]], [1, [37]], [2, [3, 4]], [2, [76, 77]], [3, [9, 19, 29]], [3, [32, 33, 34]], [4, [53, 63, 73, 83]]];
+    const array = [[1, [55]], [1, [80]], [1, [10]], [1, [37]], [2, [3, 4]], [2, [76, 77]],
+      [3, [9, 19, 29]], [3, [32, 33, 34]], [4, [53, 63, 73, 83]]];
     for (let i = 0; i < array.length; i += 1) {
       shipsArr.push(ship(array[i][0], array[i][1]));
     }
@@ -48,16 +49,9 @@ const board = (player) => {
     return true;
   };
 
-  const reset = () => {
-    const shipsArr = [];
-    const missedArr = [];
-    const hitsArr = [];
-    const emptyCells = [...Array(100).keys()];
-  };
-
   placeShips();
   return {
-    player, shipsArr, winner, hitsArr, missedArr, receiveAttack, emptyCells, reset,
+    player, shipsArr, winner, hitsArr, missedArr, receiveAttack, emptyCells,
   };
 };
 

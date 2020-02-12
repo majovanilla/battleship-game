@@ -2,7 +2,6 @@ import board from '../js/board';
 
 describe('board function', () => {
   const board1 = board();
-  const board2 = board();
   board1.receiveAttack(10);
 
   test('it returns correct properties', () => {
