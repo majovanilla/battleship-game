@@ -3,7 +3,7 @@
 > This project is a simple version of the Battleship game using vanilla Javascript.
 > The purpose of the project is to practice testing using Jest.
 
-![screenshot](img/screenshot.png)
+![screenshot](src/img/screenshot.png)
 
 This project has this characteristics:
   - Has a basic interface that allows the user to select a cell to sink a ship.
